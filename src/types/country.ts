@@ -1,5 +1,5 @@
 export interface Country {
-  name: {
+  name?: {
     official: string;
     nativeName: {
       eng: {
@@ -7,21 +7,21 @@ export interface Country {
       };
     };
   };
-  tld: Array<string>;
-  capital: string;
-  region: string;
-  subregion: string;
-  borders: string[];
-  population: number;
-  languages: {
+  tld?: Array<string>;
+  capital?: string;
+  region?: string;
+  subregion?: string;
+  borders?: string[];
+  population?: number;
+  languages?: {
     [key: string]: string;
   };
-  flags: {
+  flags?: {
     png: string;
     svg: string;
     alt: string;
   };
-  currencies: {
+  currencies?: {
     [currencyCode: string]: {
       name: string;
       symbol: string;
