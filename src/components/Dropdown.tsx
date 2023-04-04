@@ -16,7 +16,7 @@ type TransitionClass = {
 };
 const transitionClass: TransitionClass = {
   entering: "opacity-0 max-h-0 py-0 overflow-hidden",
-  entered: "opacity-1 max-h-[500px] py-4 overflow-hidden",
+  entered: "opacity-100 max-h-[500px] py-4 overflow-hidden",
   exiting: "opacity-0 max-h-0 py-0 overflow-hidden",
   exited: "opacity-0 max-h-0 py-0 overflow-hidden",
 };
@@ -54,24 +54,27 @@ const Dropdown = <T extends Option>({
         <span>.</span>
       </button>
       <Transition nodeRef={ulRef} unmountOnExit in={isOpen} timeout={150}>
-        {(state) => (
-          <ul
-            ref={ulRef}
-            className={`absolute z-10 bg-my-white top-16 text-sm w-full shadow-my border border-my-lm-very-light-gray rounded-md transition-all ${transitionClass[state]}`}
-            id={id}
-          >
-            {options.map((option, key) => (
-              <li key={key}>
-                <button
-                  onClick={() => handleItemClick(option)}
-                  className="px-5 py-2 w-full text-left hover:bg-my-lm-very-light-gray"
-                >
-                  {typeof option === "object" ? option.label : option}
-                </button>
-              </li>
-            ))}
-          </ul>
-        )}
+        {(state) => {
+          console.log(state);
+          return (
+            <ul
+              ref={ulRef}
+              className={`absolute z-10 bg-my-white top-16 text-sm w-full shadow-my border border-my-lm-very-light-gray rounded-md transition-all ${transitionClass[state]}`}
+              id={id}
+            >
+              {options.map((option, key) => (
+                <li key={key}>
+                  <button
+                    onClick={() => handleItemClick(option)}
+                    className="px-5 py-2 w-full text-left hover:bg-my-lm-very-light-gray"
+                  >
+                    {typeof option === "object" ? option.label : option}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          );
+        }}
       </Transition>
     </div>
   );

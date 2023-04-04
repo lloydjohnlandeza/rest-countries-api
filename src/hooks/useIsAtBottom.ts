@@ -1,10 +1,11 @@
 import { useEffect, useState, RefObject } from "react";
 
-function useIsAtBottom(ref: RefObject<HTMLDivElement>, threshold = 500) {
+function useIsAtBottom(ref: RefObject<HTMLDivElement> | null, threshold = 500) {
   const [isAtBottom, setIsAtBottom] = useState(false);
 
   useEffect(() => {
     const checkIfAtBottom = () => {
+      if (!ref) return;
       const element = ref.current;
       if (element) {
         setIsAtBottom(

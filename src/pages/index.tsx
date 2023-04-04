@@ -15,8 +15,8 @@ export default function Home() {
   const { data, isLoading, isError } = useGetCountries();
   const [regions, setRegions] = useState<Array<string>>([]);
   const [search, setSearch] = useState("");
-  const [itemsToShow, setItemsToShow] = useState(10); // Set initial items to show
-  const ref = useRef();
+  const [itemsToShow, setItemsToShow] = useState(50); // Set initial items to show
+  const ref = useRef(null);
   const generateData = () => {
     if (!data) return [];
     let newData = [...data];
@@ -28,10 +28,15 @@ export default function Home() {
         return val.region && regions.includes(val.region);
       });
     }
-    setItemsToShow(10);
+    setItemsToShow(itemsToShow);
     return newData;
   };
-  const memoizedData = useMemo(generateData, [data, regions, search]);
+  const memoizedData = useMemo(generateData, [
+    data,
+    regions,
+    search,
+    itemsToShow,
+  ]);
 
   const isAtBottom = useIsAtBottom(ref);
 
@@ -57,17 +62,21 @@ export default function Home() {
       newRegions.splice(index, 1);
     }
     setRegions(newRegions);
-    setItemsToShow(10);
+    setItemsToShow(itemsToShow);
   };
 
   if (isLoading) {
     return <div>loading</div>;
   }
 
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearch(e.target.value);
+    setItemsToShow(itemsToShow);
+  };
   return (
     <main className="max-w-7xl mx-auto px-5">
       <Input
-        onChange={(e) => setSearch(e.target.value)}
+        onChange={handleSearch}
         className="mb-10"
         placeholder="Search for a country..."
       />
@@ -82,7 +91,7 @@ export default function Home() {
           {regions.map((region) => (
             <li key={region}>
               <button
-                className="bg-gray-200 rounded-md text-xs p-2 hover:shadow-my"
+                className=" bg-gray-200 rounded-md text-xs p-2 hover:shadow-my"
                 onClick={() => handleRegionChange(region)}
               >
                 {region}
@@ -91,7 +100,6 @@ export default function Home() {
           ))}
         </ul>
       )}
-
       <div
         ref={ref}
         className="grid grid-cols-4 gap-10 max-xl:grid-cols-3 max-xl:gap-x-5 max-lg:grid-cols-2 max-md:grid-cols-1 justify-between"
