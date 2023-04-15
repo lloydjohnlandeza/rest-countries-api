@@ -63,7 +63,6 @@ const CountryView = ({ initialData }: { initialData: Country[] }) => {
           <div className="aspect-[13/9] relative">
             {country && country.flags && (
               <Image
-                loading="eager"
                 className="w-full"
                 src={country.flags.svg}
                 alt={country.flags.alt}
