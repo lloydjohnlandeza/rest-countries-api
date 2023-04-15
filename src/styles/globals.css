@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  @font-face {
+    font-family: 'nunito';
+    src: url('./fonts/NunitoSans-Light.ttf');
+    font-weight: 300;
+    font-style: normal;
+  }
+  @font-face {
+    font-family: 'nunito';
+    src: url('./fonts/NunitoSans-SemiBold.ttf');
+    font-weight: 600;
+    font-style: normal;
+  }
+  @font-face {
+    font-family: 'nunito';
+    src: url('./fonts/NunitoSans-ExtraBold.ttf');
+    font-weight: 700;
+    font-style: normal;
+  }
+  html, body {
+    font-family: 'nunito';
+    font-weight: 300;
+  }
+}
