@@ -1,12 +1,18 @@
-import React from "react";
 import IconMoon from "./IconMoon";
-export default function Header() {
+import React from "react";
+import Link from "next/link";
+interface HeaderProps {
+  toggleDarkMode: () => void;
+}
+const Header: React.FC<HeaderProps> = ({ toggleDarkMode }) => {
   return (
-    <div className="sticky mb-8 shadow-md">
+    <div className="dark:bg-my-dm-dark-blue sticky mb-8 shadow-md">
       <div className="max-w-7xl px-4 py-6 flex justify-between m-auto">
-        <h3 className="text-sm font-extrabold ">Where in the world?</h3>
+        <Link href={"/"} className="text-sm font-extrabold ">
+          Where in the world?
+        </Link>
         <div>
-          <button className="flex items-center gap-2">
+          <button onClick={toggleDarkMode} className="flex items-center gap-2">
             <IconMoon />
             <span className="text-xs font-semibold">Dark Mode</span>
           </button>
@@ -14,4 +20,5 @@ export default function Header() {
       </div>
     </div>
   );
-}
+};
+export default Header;
