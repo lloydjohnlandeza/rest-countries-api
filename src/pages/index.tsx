@@ -137,7 +137,7 @@ export default function Home({ initialData }: { initialData: Country[] }) {
             className="dark:bg-my-dm-dark-blue bg-my-white"
             placeholder="Search for a country..."
           />
-          <div className="md:ml-auto">
+          <div className="md:ml-auto md:mt-0 mt-10">
             <Dropdown
               onChange={handleRegionChange}
               className="dark:bg-my-dm-dark-blue bg-my-white"
