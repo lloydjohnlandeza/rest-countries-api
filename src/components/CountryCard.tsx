@@ -28,7 +28,6 @@ const CountryCard: React.FC<DropdownProps> = ({
   className = "",
   style,
 }) => {
-  // const [isOpen, setIsOpen] = useState(false);
   let countryName =
     country && country.name
       ? encodeURI(country.name.official.toLowerCase())
