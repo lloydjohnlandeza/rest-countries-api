@@ -44,12 +44,14 @@ const CountryCard: React.FC<DropdownProps> = ({
           {country && country.flags && (
             <Image
               className="w-full object-cover"
-              src={country.flags.png}
+              src={country.flags.svg}
               alt={country.flags.alt}
+              fill
               sizes="@media not all and (min-width: 768px) 80vw,
               @media not all and (min-width: 1280px) 50vw,
               33vw"
-              fill
+              placeholder="blur"
+              blurDataURL="/spinner.svg"
             />
           )}
         </div>
