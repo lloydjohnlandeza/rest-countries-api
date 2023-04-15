@@ -6,7 +6,7 @@ interface HeaderProps {
 }
 const Header: React.FC<HeaderProps> = ({ toggleDarkMode }) => {
   return (
-    <div className="dark:bg-my-dm-dark-blue sticky mb-8 shadow-md">
+    <div className="dark:bg-my-dm-dark-blue bg-my-white sticky mb-8 shadow-md">
       <div className="max-w-7xl px-4 py-6 flex justify-between m-auto">
         <Link href={"/"} className="text-sm font-extrabold ">
           Where in the world?

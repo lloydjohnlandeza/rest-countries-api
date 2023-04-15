@@ -29,7 +29,7 @@ export default function Input({
         onChange={onChange}
         placeholder={placeholder}
         type={type}
-        className="dark:bg-my-dm-dark-blue dark:placeholder:text-my-white bg-my-lm-very-light-gray border-none h-full w-full outline-none placeholder:font-extralight placeholder:text-my-lm-dark-gray placeholder:opacity-40 dark:placeholder:100"
+        className="dark:bg-my-dm-dark-blue dark:placeholder:text-my-white bg-transparent border-none h-full w-full outline-none placeholder:font-extralight placeholder:text-my-lm-dark-gray placeholder:opacity-40 dark:placeholder:100"
       />
     </div>
   );

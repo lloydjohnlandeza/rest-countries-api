@@ -130,19 +130,23 @@ export default function Home({ initialData }: { initialData: Country[] }) {
         <meta property="og:title" content="List of Countries" key="title" />
       </Head>
       <main className="max-w-7xl mx-auto px-5">
-        <Input
-          defaultValue={search}
-          onChange={handleInputChange}
-          className="mb-10"
-          placeholder="Search for a country..."
-        />
-        <Dropdown
-          onChange={handleRegionChange}
-          className="mb-10"
-          id="filter_by_region"
-          options={["Africa", "Americas", "Asia", "Europe", "Oceania"]}
-        />
-        <ul className="flex gap-2 mb-10">
+        <div className="grid md:grid-cols-2">
+          <Input
+            defaultValue={search}
+            onChange={handleInputChange}
+            className="dark:bg-my-dm-dark-blue bg-my-white"
+            placeholder="Search for a country..."
+          />
+          <div className="md:ml-auto">
+            <Dropdown
+              onChange={handleRegionChange}
+              className="dark:bg-my-dm-dark-blue bg-my-white"
+              id="filter_by_region"
+              options={["Africa", "Americas", "Asia", "Europe", "Oceania"]}
+            />
+          </div>
+        </div>
+        <ul className="flex gap-2 my-5">
           <AnimatePresence>
             {regions.map((region) => (
               <motion.li

@@ -52,6 +52,7 @@ Users should be able to:
 ### Continued development
 - Implement page transitions for smoother navigation when moving from the country list to an individual country view.
 - Incorporate query parameters to allow users to filter countries by region more efficiently
+- Improve loading UI
 
 ## Author
 
