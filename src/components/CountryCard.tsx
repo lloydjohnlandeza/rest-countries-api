@@ -56,9 +56,9 @@ const CountryCard: React.FC<DropdownProps> = ({
           )}
         </div>
         <div className="px-5 py-6">
-          <h3 className="text-lg font-extrabold mb-3">
+          <h2 className="text-lg font-extrabold mb-3">
             {country?.name?.official}
-          </h3>
+          </h2>
           <ul>
             {displayProperties.map(({ label, property }, key) => (
               <li className="text-sm mb-2" key={key}>

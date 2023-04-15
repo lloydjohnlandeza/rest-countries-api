@@ -68,8 +68,8 @@ const CountryView = ({ initialData }: { initialData: Country[] }) => {
                 alt={country.flags.alt}
                 fill
                 sizes="@media not all and (min-width: 768px) 80vw,
-              @media not all and (min-width: 1280px) 50vw,
-              33vw"
+                @media not all and (min-width: 1280px) 50vw,
+                33vw"
                 placeholder="blur"
                 blurDataURL="/spinner.svg"
               />
