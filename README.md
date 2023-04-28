@@ -12,9 +12,9 @@ This is a solution to the [REST Countries API with color theme switcher challeng
   - [Built with](#built-with)
   - [What I learned](#what-i-learned)
   - [Continued development](#continued-development)
+- [Running the App](#install)
 - [Author](#author)
 
-**Note: Delete this note and update the table of contents based on what sections you keep.**
 
 ## Overview
 
@@ -50,10 +50,14 @@ Users should be able to:
 
 
 ### Continued development
-- Implement page transitions for smoother navigation when moving from the country list to an individual country view.
+- Implement page transitions for smoother navigation when moving from the country list to an individual country view. (Done)
+  - Fix transtion from country list to individual country view jumping animation due to scrollbar
 - Incorporate query parameters to allow users to filter countries by region more efficiently
 - Improve loading UI
 
+### Install
+- npm install
+- npm run dev
 ## Author
 
 - Website - [Lloyd John Landeza](https://lloydjohncodes.netlify.com/)

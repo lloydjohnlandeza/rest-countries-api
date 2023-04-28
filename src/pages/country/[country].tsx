@@ -10,6 +10,7 @@ import {
 import Image from "next/image";
 import { useRouter } from "next/router";
 import Head from "next/head";
+import { motion } from "framer-motion";
 
 const CountryView = ({ initialData }: { initialData: Country[] }) => {
   const router = useRouter();
@@ -42,9 +43,69 @@ const CountryView = ({ initialData }: { initialData: Country[] }) => {
       });
     }
   }, [country.borders]);
-
+  const data = router.query;
   if (isLoading) {
-    return <div className="max-w-7xl mx-auto px-5">loading</div>;
+    return (
+      <div className="max-w-7xl mx-auto px-5">
+        <Link
+          className="inline-flex items-center gap-2 px shadow-lg transition-shadow hover:shadow-lg dark:hover:shadow-2xl border border-my-lm-very-light-gray rounded-sm px-6 py-1 text-sm bg-my-white dark:bg-my-dm-dark-blue dark:border-my-dm-dark-blue"
+          href="/"
+        >
+          <IconLeft /> Back
+        </Link>
+        <div className="grid gap-10 mt-10 xl:grid-cols-[1fr_1fr] lg:grid-cols-[1.5fr_1fr] 2xl:gap-32 lg:gap-20 md:gap-8">
+          <div className="aspect-[13/9] relative">
+            {data && data.image && (
+              <Image
+                className="w-full"
+                src={data.image}
+                alt={"Flag"}
+                fill
+                sizes="@media not all and (min-width: 768px) 80vw,
+                @media not all and (min-width: 1280px) 50vw,
+                33vw"
+                placeholder="blur"
+                blurDataURL="/spinner.svg"
+              />
+            )}
+          </div>
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1}} className="self-center animate-pulse md:grid md:grid-cols-2">
+            <div className="w-60 h-3 mb-6 md:col-span-2 bg-slate-200 rounded"></div>
+            <ul className="xl:col-span-1 md:col-span-2">
+              <li className="mb-2 w-52">
+                <div className="h-3 bg-slate-200 rounded"></div>
+              </li>
+              <li className="mb-2 w-48">
+                <div className="h-3 bg-slate-200 rounded"></div>
+              </li>
+              <li className="mb-2 w-44">
+                <div className="h-3 bg-slate-200 rounded"></div>
+              </li>
+              <li className="mb-2 w-40">
+                <div className="h-3 bg-slate-200 rounded"></div>
+              </li>
+              <li className="mb-2 w-48">
+                <div className="h-3 bg-slate-200 rounded"></div>
+              </li>
+            </ul>
+            <ul className="mt-10 xl:col-span-1 md:col-span-2 lg:mt-0">
+              <li className="mb-2 w-52">
+                <div className="h-3 bg-slate-200 rounded"></div>
+              </li>
+              <li className="mb-2 w-48">
+                <div className="h-3 bg-slate-200 rounded"></div>
+              </li>
+              <li className="mb-2 w-44">
+                <div className="h-3 bg-slate-200 rounded"></div>
+              </li>
+              <li className="mb-2 w-40">
+                <div className="h-3 bg-slate-200 rounded"></div>
+              </li>
+            </ul>
+          </motion.div>
+        </div>
+      </div>
+    );
   }
   return (
     <>
@@ -59,7 +120,7 @@ const CountryView = ({ initialData }: { initialData: Country[] }) => {
         >
           <IconLeft /> Back
         </Link>
-        <div className="grid items-center gap-10 mt-10 xl:grid-cols-[1fr_1fr] lg:grid-cols-[1.5fr_1fr] 2xl:gap-32 lg:gap-20 md:gap-8">
+        <div className="grid gap-10 mt-10 xl:grid-cols-[1fr_1fr] lg:grid-cols-[1.5fr_1fr] 2xl:gap-32 lg:gap-20 md:gap-8">
           <div className="aspect-[13/9] relative">
             {country && country.flags && (
               <Image
@@ -75,7 +136,9 @@ const CountryView = ({ initialData }: { initialData: Country[] }) => {
               />
             )}
           </div>
-          <div className="md:grid md:grid-cols-2">
+          <motion.div
+            initial={{ opacity: 0 }} animate={{ opacity: 1}}
+            className="self-center md:grid md:grid-cols-2">
             <h1 className="mb-6 text-2xl font-extrabold md:col-span-2">
               {country?.name?.common}
             </h1>
@@ -135,10 +198,10 @@ const CountryView = ({ initialData }: { initialData: Country[] }) => {
             </ul>
             {borderOfficialNames.length > 0 && (
               <>
-                <h2 className="my-4 text-lg font-semibold md:col-span-2">
+                <motion.h2 initial={{ opacity: 0 }} animate={{ opacity: 1}} className="my-4 text-lg font-semibold md:col-span-2">
                   Border Countries:
-                </h2>
-                <div className="flex gap-2 flex-wrap md:col-span-2">
+                </motion.h2>
+                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1}} className="flex gap-2 flex-wrap md:col-span-2">
                   {borderOfficialNames.map((border, key) => (
                     <Link
                       className="gap-2 px dark:shadow-lg shadow-my transition-shadow dark:hover:shadow-2xl hover:shadow-lg border border-my-lm-very-light-gray rounded-sm px-6 py-1 text-sm dark:border-my-dm-dark-blue dark:bg-my-dm-dark-blue"
@@ -148,10 +211,10 @@ const CountryView = ({ initialData }: { initialData: Country[] }) => {
                       {border}
                     </Link>
                   ))}
-                </div>
+                </motion.div>
               </>
             )}
-          </div>
+          </motion.div>
         </div>
       </main>
     </>

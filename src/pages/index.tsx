@@ -16,6 +16,7 @@ import { Country } from "@/types/country";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { debounce } from "lodash";
+import CountryCardTransition from "@/components/CountryCardTransition";
 
 const itemsShowCount = 50;
 export default function Home({ initialData }: { initialData: Country[] }) {
@@ -25,6 +26,14 @@ export default function Home({ initialData }: { initialData: Country[] }) {
   const [regions, setRegions] = useState<Array<string>>([]);
   const [search, setSearch] = useState("");
   const [itemsToShow, setItemsToShow] = useState(itemsShowCount); // Set initial items to show
+  const [animate, setAnimate] = useState(false)
+  interface ISelectCountry extends Country {
+    width: number
+    height: number
+    left: number
+    top: number
+  }
+  const [selectedCountry, setSelectedCountry] = useState<ISelectCountry>()
   const ref = useRef(null);
 
   const generateData = () => {
@@ -120,6 +129,17 @@ export default function Home({ initialData }: { initialData: Country[] }) {
     debouncedChange(e);
   };
 
+  const handleRedirect = (country: Country, ref: React.MutableRefObject<HTMLDivElement>) => {
+    setAnimate(true)
+    const rect = ref.current.getBoundingClientRect();
+    setSelectedCountry({
+      ...country,
+      width: ref.current.clientWidth,
+      height: ref.current.clientHeight,
+      left: rect.left,
+      top: rect.top
+    })
+  }
   if (isLoading) {
     return <div className="max-w-7xl mx-auto px-5">loading</div>;
   }
@@ -129,57 +149,69 @@ export default function Home({ initialData }: { initialData: Country[] }) {
         <title>List of Countries</title>
         <meta property="og:title" content="List of Countries" key="title" />
       </Head>
-      <main className="max-w-7xl mx-auto px-5">
-        <div className="grid md:grid-cols-2">
-          <Input
-            defaultValue={search}
-            onChange={handleInputChange}
-            className="dark:bg-my-dm-dark-blue bg-my-white"
-            placeholder="Search for a country..."
-          />
-          <div className="md:ml-auto md:mt-0 mt-10">
-            <Dropdown
-              onChange={handleRegionChange}
-              className="dark:bg-my-dm-dark-blue bg-my-white"
-              id="filter_by_region"
-              options={["Africa", "Americas", "Asia", "Europe", "Oceania"]}
-            />
-          </div>
-        </div>
-        <ul className="flex gap-2 my-5">
-          <AnimatePresence>
-            {regions.map((region) => (
-              <motion.li
-                className="flex overflow-hidden"
-                key={region}
-                animate={{ height: "auto", opacity: 1 }}
-                initial={{ height: 0, opacity: 0 }}
-                exit={{ height: 0, opacity: 0 }}
-              >
-                <button
-                  className="h-full p-2 dark:bg-my-dm-dark-blue bg-gray-200 rounded-md text-xs dark:hover:shadow-2xl hover:shadow-my"
-                  onClick={() => handleRegionChange(region)}
-                >
-                  {region}
-                </button>
-              </motion.li>
-            ))}
-          </AnimatePresence>
-        </ul>
-        <div
-          ref={ref}
-          className="grid grid-cols-4 gap-10 max-xl:grid-cols-3 max-xl:gap-x-5 max-lg:grid-cols-2 max-md:grid-cols-1 justify-between"
-        >
-          {memoizedData.slice(0, itemsToShow).map((d, key) => (
+      <CountryCardTransition country={selectedCountry} />
+      <main className="max-w-7xl mx-auto px-5 relative">
+        <AnimatePresence>
+          {!animate &&
             <motion.div
-              key={d.name?.official}
+              key="main"
               animate={{ opacity: 1 }}
               initial={{ opacity: 0 }}
+              exit={{ opacity: 0 }}
             >
-              <CountryCard country={d} />
+              <div className="grid md:grid-cols-2">
+                <Input
+                  defaultValue={search}
+                  onChange={handleInputChange}
+                  className="dark:bg-my-dm-dark-blue bg-my-white"
+                  placeholder="Search for a country..."
+                />
+                <div className="md:ml-auto md:mt-0 mt-10">
+                  <Dropdown
+                    onChange={handleRegionChange}
+                    className="dark:bg-my-dm-dark-blue bg-my-white"
+                    id="filter_by_region"
+                    options={["Africa", "Americas", "Asia", "Europe", "Oceania"]}
+                  />
+                </div>
+              </div>
+              <ul className="flex gap-2 my-5">
+                <AnimatePresence>
+                  {regions.map((region) => (
+                    <motion.li
+                      className="flex overflow-hidden"
+                      key={region}
+                      animate={{ height: "auto", opacity: 1 }}
+                      initial={{ height: 0, opacity: 0 }}
+                      exit={{ height: 0, opacity: 0 }}
+                    >
+                      <button
+                        className="h-full p-2 dark:bg-my-dm-dark-blue bg-gray-200 rounded-md text-xs dark:hover:shadow-2xl hover:shadow-my"
+                        onClick={() => handleRegionChange(region)}
+                      >
+                        {region}
+                      </button>
+                    </motion.li>
+                  ))}
+                </AnimatePresence>
+              </ul>
+              <div
+                ref={ref}
+                className="grid grid-cols-4 gap-10 max-xl:grid-cols-3 max-xl:gap-x-5 max-lg:grid-cols-2 max-md:grid-cols-1 justify-between"
+              >
+                {memoizedData.slice(0, itemsToShow).map((d, key) => (
+                  <motion.div
+                    key={d.name?.official}
+                    animate={{ opacity: 1 }}
+                    initial={{ opacity: 0 }}
+                  >
+                    <CountryCard onClick={handleRedirect} country={d} />
+                  </motion.div>
+                ))}
+              </div>
             </motion.div>
-          ))}
-        </div>
+          }
+        </AnimatePresence>
       </main>
     </>
   );

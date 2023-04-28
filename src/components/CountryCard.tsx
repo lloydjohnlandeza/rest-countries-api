@@ -2,11 +2,12 @@ import React, { useState, useRef, CSSProperties } from "react";
 import { Country } from "@/types/country";
 import Link from "next/link";
 import Image from "next/image";
-
+import CountryCardTransition from "./CountryCardTransition";
 interface DropdownProps {
   country: Country;
   className?: string;
   style?: CSSProperties;
+  onClick: (country: Country, ref: React.MutableRefObject<HTMLDivElement>) => void
 }
 
 const displayProperties = [
@@ -27,20 +28,30 @@ const CountryCard: React.FC<DropdownProps> = ({
   country,
   className = "",
   style,
+  onClick
 }) => {
   let countryName =
     country && country.name
       ? encodeURI(country.name.official.toLowerCase())
       : "/";
-
+  const ref = useRef()
   return (
     <Link
       style={style}
       className={`flex h-full shadow-my dark:shadow-2xl hover:shadow-2xl transition-shadow w-[280px] rounded-md mx-auto overflow-hidden ${className}`}
-      href={`/country/${countryName}`}
+      href={{
+        pathname: `/country/${countryName}`,
+        query: {
+          image: country.flags.svg
+        }
+      }}
+      onClick={e => {
+        e.preventDefault()
+        onClick(country, ref)
+      }}
     >
       <article className="w-full">
-        <div className="h-40 w-full relative aspect-square">
+        <div ref={ref} className="h-40 w-full relative">
           {country && country.flags && (
             <Image
               className="w-full object-cover"
