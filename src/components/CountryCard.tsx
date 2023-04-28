@@ -1,4 +1,4 @@
-import React, { useState, useRef, CSSProperties } from "react";
+import React, { useState, useRef, CSSProperties, MutableRefObject } from "react";
 import { Country } from "@/types/country";
 import Link from "next/link";
 import Image from "next/image";
@@ -7,7 +7,7 @@ interface DropdownProps {
   country: Country;
   className?: string;
   style?: CSSProperties;
-  onClick: (country: Country, ref: React.MutableRefObject<HTMLDivElement>) => void
+  onClick: (country: Country, ref:  React.MutableRefObject<HTMLDivElement | null>) => void
 }
 
 const displayProperties = [
@@ -34,17 +34,20 @@ const CountryCard: React.FC<DropdownProps> = ({
     country && country.name
       ? encodeURI(country.name.official.toLowerCase())
       : "/";
-  const ref = useRef()
+  const ref = useRef(null)
+  const redirect: { pathname: string, query?: { image: string }} = {
+    pathname: `/country/${countryName}`,
+  }
+  if (country.flags?.svg) {
+    redirect.query = {
+      image: country.flags.svg
+    }
+  }
   return (
     <Link
       style={style}
       className={`flex h-full shadow-my dark:shadow-2xl hover:shadow-2xl transition-shadow w-[280px] rounded-md mx-auto overflow-hidden ${className}`}
-      href={{
-        pathname: `/country/${countryName}`,
-        query: {
-          image: country.flags.svg
-        }
-      }}
+      href={redirect}
       onClick={e => {
         e.preventDefault()
         onClick(country, ref)

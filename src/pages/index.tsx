@@ -129,8 +129,11 @@ export default function Home({ initialData }: { initialData: Country[] }) {
     debouncedChange(e);
   };
 
-  const handleRedirect = (country: Country, ref: React.MutableRefObject<HTMLDivElement>) => {
+  const handleRedirect = (country: Country, ref: React.MutableRefObject<HTMLDivElement | null>) => {
     setAnimate(true)
+    if (!ref || !ref.current) {
+      return
+    }
     const rect = ref.current.getBoundingClientRect();
     setSelectedCountry({
       ...country,
@@ -149,7 +152,9 @@ export default function Home({ initialData }: { initialData: Country[] }) {
         <title>List of Countries</title>
         <meta property="og:title" content="List of Countries" key="title" />
       </Head>
-      <CountryCardTransition country={selectedCountry} />
+      {selectedCountry &&
+        <CountryCardTransition country={selectedCountry} />
+      }
       <main className="max-w-7xl mx-auto px-5 relative">
         <AnimatePresence>
           {!animate &&

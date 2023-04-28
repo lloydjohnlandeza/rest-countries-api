@@ -55,7 +55,7 @@ const CountryView = ({ initialData }: { initialData: Country[] }) => {
         </Link>
         <div className="grid gap-10 mt-10 xl:grid-cols-[1fr_1fr] lg:grid-cols-[1.5fr_1fr] 2xl:gap-32 lg:gap-20 md:gap-8">
           <div className="aspect-[13/9] relative">
-            {data && data.image && (
+            {data && data.image && typeof data.image === 'string' && (
               <Image
                 className="w-full"
                 src={data.image}

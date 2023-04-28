@@ -6,8 +6,14 @@ import IconLeft from "./IconLeft";
 import { motion } from "framer-motion";
 import { useRouter } from 'next/router'
 
+interface ISelectCountry extends Country {
+  width: number
+  height: number
+  left: number
+  top: number
+}
 interface DropdownProps {
-  country: Country;
+  country: ISelectCountry;
   className?: string;
   style?: CSSProperties;
 }
@@ -35,7 +41,7 @@ const CountryCardTransition: React.FC<DropdownProps> = ({
     country && country.name
       ? encodeURI(country.name.official.toLowerCase())
       : "/";
-  const ref = useRef<HTMLDivElement>()
+  const ref = useRef<HTMLDivElement>(null)
   const router = useRouter()
 
   const [imageSize, setImageSize] = useState<{
@@ -88,12 +94,15 @@ const CountryCardTransition: React.FC<DropdownProps> = ({
             top: `${imageSize?.top}px`
           }}
           onAnimationComplete={() => {
-            router.push({
+            const redirect: { pathname: string, query?: { image: string }} = {
               pathname: `/country/${countryName}`,
-              query: {
+            }
+            if (country.flags?.svg) {
+              redirect.query = {
                 image: country.flags.svg
               }
-            })
+            }
+            router.push(redirect)
           }}
         >
           {country && country.flags && (
