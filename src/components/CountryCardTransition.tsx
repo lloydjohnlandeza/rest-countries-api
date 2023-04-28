@@ -64,7 +64,7 @@ const CountryCardTransition: React.FC<DropdownProps> = ({
   return (
     <>
     <div className="relative">
-      <div className="absolute top-0 left-0 right-0 max-w-7xl mx-auto px-5 pb-5">
+      <div className="opacity-0 absolute top-0 left-0 right-0 max-w-7xl mx-auto px-5 pb-5">
         <Link
           className="inline-flex items-center gap-2 px shadow-lg transition-shadow hover:shadow-lg dark:hover:shadow-2xl border border-my-lm-very-light-gray rounded-sm px-6 py-1 text-sm bg-my-white dark:bg-my-dm-dark-blue dark:border-my-dm-dark-blue"
           href="/"
