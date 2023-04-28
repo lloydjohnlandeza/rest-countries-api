@@ -13,7 +13,7 @@ interface ISelectCountry extends Country {
   top: number
 }
 interface DropdownProps {
-  country: ISelectCountry;
+  country?: ISelectCountry;
   className?: string;
   style?: CSSProperties;
 }

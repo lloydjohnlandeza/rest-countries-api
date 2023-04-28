@@ -152,9 +152,7 @@ export default function Home({ initialData }: { initialData: Country[] }) {
         <title>List of Countries</title>
         <meta property="og:title" content="List of Countries" key="title" />
       </Head>
-      {selectedCountry &&
-        <CountryCardTransition country={selectedCountry} />
-      }
+      <CountryCardTransition country={selectedCountry} />
       <main className="max-w-7xl mx-auto px-5 relative">
         <AnimatePresence>
           {!animate &&
