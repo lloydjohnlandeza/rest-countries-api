@@ -22,7 +22,7 @@ const itemsShowCount = 50;
 export default function Home({ initialData }: { initialData: Country[] }) {
   const router = useRouter();
 
-  const { countries, isLoading } = useGetCountries({ initialData });
+  const { countries } = useGetCountries({ initialData });
   const [regions, setRegions] = useState<Array<string>>([]);
   const [search, setSearch] = useState("");
   const [itemsToShow, setItemsToShow] = useState(itemsShowCount); // Set initial items to show
@@ -143,9 +143,7 @@ export default function Home({ initialData }: { initialData: Country[] }) {
       top: rect.top
     })
   }
-  if (isLoading) {
-    return <div className="max-w-7xl mx-auto px-5">loading</div>;
-  }
+
   return (
     <>
       <Head>
